@@ -54,8 +54,8 @@ arrs_schema = ArrSchema(many=True)
 # endpoint to show all users
 @app.route("/flights", methods=["GET"])
 def get_user():
-    all_users = User.query.all()
-    result = users_schema.dump(all_users)
+    flight_details = arrival.query.all()
+    result = arrs_schema.dump(flight_details)
     return jsonify(result.data)
 
 if __name__ == '__main__':

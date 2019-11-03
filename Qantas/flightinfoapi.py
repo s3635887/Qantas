@@ -11,9 +11,23 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'fl
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-class departure(db.Model):
+class flightDetails(db.Model):
     flightNumber = db.Column(db.String(80), primary_key=True)
     airline = db.Column(db.String(80), nullable=False)
+    
+
+    def __init__(self, flightNumber, airline):
+        self.flightNumber = flightNumber
+        self.airline = airline
+        
+
+class fltDetailSchema(ma.Schema):
+    class Meta:
+        # Fields to expose
+        fields = ('flightNumber', 'airline')
+
+class departure(db.Model):
+    flightNumber = db.Column(db.String(80), primary_key=True)
     scheduled = db.Column(db.DateTime, nullable = False)
     airport = db.Column(db.String(150), nullable = False)
 
@@ -30,7 +44,6 @@ class DeptSchema(ma.Schema):
 
 class arrival(db.Model):
     flightNumber = db.Column(db.String(80), primary_key=True)
-    airline = db.Column(db.String(80), nullable=False)
     scheduled = db.Column(db.DateTime, nullable = False)
     airport = db.Column(db.String(150), nullable = False)
 
@@ -45,7 +58,8 @@ class ArrSchema(ma.Schema):
         # Fields to expose
         fields = ('flightNumber', 'airline', 'scheduled', 'airport')
 
-
+flight_detail_schema = fltDetailSchema()
+flight_details_schema = fltDetailSchema(many=True)
 dept_schema = DeptSchema()
 depts_schema = DeptSchema(many=True)
 arr_schema = ArrSchema()

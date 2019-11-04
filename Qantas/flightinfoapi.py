@@ -28,7 +28,7 @@ class fltDetailSchema(ma.Schema):
 
 class departure(db.Model):
     flightNumber = db.Column(db.String(80), primary_key=True)
-    scheduled = db.Column(db.DateTime, nullable = False)
+    scheduled = db.Column(db.String(100), nullable = False)
     airport = db.Column(db.String(150), nullable = False)
 
     def __init__(self, flightNumber, airline, scheduled, airport):
@@ -40,11 +40,11 @@ class departure(db.Model):
 class DeptSchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ('flightNumber', 'airline', 'scheduled', 'airport')
+        fields = ('flightNumber', 'scheduled', 'airport')
 
 class arrival(db.Model):
     flightNumber = db.Column(db.String(80), primary_key=True)
-    scheduled = db.Column(db.DateTime, nullable = False)
+    scheduled = db.Column(db.String(100), nullable = False)
     airport = db.Column(db.String(150), nullable = False)
 
     def __init__(self, flightNumber, airline, scheduled, airport):
@@ -56,7 +56,7 @@ class arrival(db.Model):
 class ArrSchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ('flightNumber', 'airline', 'scheduled', 'airport')
+        fields = ('flightNumber', 'scheduled', 'airport')
 
 flight_detail_schema = fltDetailSchema()
 flight_details_schema = fltDetailSchema(many=True)

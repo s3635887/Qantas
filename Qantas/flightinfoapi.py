@@ -37,4 +37,3 @@ if __name__ == '__main__':
 
 
 
-update arrival set scheduled ='2019-10-2 01:25:00' where scheduled ='2019-10-2T01:25:00';

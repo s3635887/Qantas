@@ -1,9 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import sqlite3 as lite
+from datetime import datetime
 from flask import Flask
 import os
 
+#config needed to create the model
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'flightinfodata.db')
@@ -13,7 +15,7 @@ ma = Marshmallow(app)
 
 class departure(db.Model):
     flightNumber = db.Column(db.String(80), primary_key=True)
-    scheduled = db.Column(db.String(100), nullable = False)
+    scheduled = db.Column(db.DATETIME)
     airport = db.Column(db.String(150), nullable = False)
     airlines = db.Column(db.String(80), nullable=False)
 
@@ -31,7 +33,7 @@ class DeptSchema(ma.Schema):
 
 class arrival(db.Model):
     flightNumber = db.Column(db.String(80), primary_key=True)
-    scheduled = db.Column(db.String(100), nullable = False)
+    scheduled = db.Column(db.DATETIME)
     airport = db.Column(db.String(150), nullable = False)
     airlines = db.Column(db.String(80), nullable=False)
 

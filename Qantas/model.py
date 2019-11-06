@@ -1,6 +1,15 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
+import sqlite3 as lite
+from flask import Flask
+import os
 
+app = Flask(__name__)
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'flightinfodata.db')
 db = SQLAlchemy(app)
+ma = Marshmallow(app)
+
 
 class departure(db.Model):
     flightNumber = db.Column(db.String(80), primary_key=True)

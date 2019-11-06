@@ -6,6 +6,7 @@ import sqlite3 as lite
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import and_, or_, not_
 from sqlalchemy import create_engine
+from model import departure, DeptSchema, arrival, ArrSchema
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -14,47 +15,6 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 Session = sessionmaker(bind = engine)
 session = Session()
-
-class departure(db.Model):
-    flightNumber = db.Column(db.String(80), primary_key=True)
-    scheduled = db.Column(db.String(100), nullable = False)
-    airport = db.Column(db.String(150), nullable = False)
-    airlines = db.Column(db.String(80), nullable=False)
-
-
-    def __init__(self, flightNumber,airlines, scheduled, airport):
-        self.flightNumber = flightNumber
-        self.scheduled = scheduled
-        self.airport = airport
-        self.airlines = airlines
-
-class DeptSchema(ma.Schema):
-    class Meta:
-        # Fields to expose
-        fields = ('flightNumber', 'scheduled', 'airport','airline')
-
-class arrival(db.Model):
-    flightNumber = db.Column(db.String(80), primary_key=True)
-    scheduled = db.Column(db.String(100), nullable = False)
-    airport = db.Column(db.String(150), nullable = False)
-    airlines = db.Column(db.String(80), nullable=False)
-
-
-    def __init__(self, flightNumber,airlines, scheduled, airport):
-        self.flightNumber = flightNumber
-        self.scheduled = scheduled
-        self.airport = airport
-        self.airlines = airlines
-
-class ArrSchema(ma.Schema):
-    class Meta:
-        # Fields to expose
-        fields = ('flightNumber', 'scheduled', 'airport', 'airline')
-        
-dept_schema = DeptSchema()
-depts_schema = DeptSchema(many=True)
-arr_schema = ArrSchema()
-arrs_schema = ArrSchema(many=True)
 
 # endpoint to show all users
 @app.route("/flights", methods=["GET"])
